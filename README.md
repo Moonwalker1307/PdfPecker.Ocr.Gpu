@@ -7,9 +7,9 @@ back to that runtime. Decoding, layout, hOCR and searchable PDFs are PdfPecker.O
 
 PdfPecker.Ocr itself stays dependency-free. This package is where the native code lives.
 
-> PdfPecker.Ocr.Gpu is being built towards its first release, 0.1.0. It needs a PdfPecker.Ocr with
-> `OcrOptions.Accelerator` ([PdfPecker.Ocr#8](https://github.com/Moonwalker1307/PdfPecker.Ocr/pull/8)). Until that is
-> released, it builds against a checkout of PdfPecker.Ocr next to this repository.
+> PdfPecker.Ocr.Gpu is being built towards its first release, 1.24.0, which shares PdfPecker's version number as
+> PdfPecker.Ocr does. It needs PdfPecker.Ocr 1.24.0 or later, the first with `OcrOptions.Accelerator`. Until that is on
+> nuget.org, it builds against a checkout of PdfPecker.Ocr next to this repository.
 
 ```csharp
 using PdfPecker.Ocr;
@@ -101,7 +101,7 @@ helps if it beats the built-in runtime.
 ## Build
 
 ```
-git clone https://github.com/Moonwalker1307/PdfPecker.Ocr        # next to this repository, until 0.1.0 is released
+git clone https://github.com/Moonwalker1307/PdfPecker.Ocr        # next to this repository, until 1.24.0 is released
 dotnet build -c Release
 dotnet test -c Release --no-build
 ```

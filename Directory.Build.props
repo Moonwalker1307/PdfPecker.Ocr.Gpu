@@ -6,17 +6,18 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <!-- Local builds pack as a pre-release; CI passes the real version. -->
-    <Version>0.1.0-dev</Version>
+    <!-- Local builds pack as a pre-release; CI passes the real version. Like PdfPecker.Ocr, the package shares
+         PdfPecker's version number. -->
+    <Version>1.24.0-dev</Version>
     <!-- The PdfPecker.Ocr release the package builds against and depends on at least; the first with OcrAccelerator. -->
-    <PdfPeckerOcrVersion>0.1.0</PdfPeckerOcrVersion>
+    <PdfPeckerOcrVersion>1.24.0</PdfPeckerOcrVersion>
     <!-- The lowest ONNX Runtime the package works with. The application's native package (Microsoft.ML.OnnxRuntime.Gpu,
          Microsoft.ML.OnnxRuntime.DirectML or Microsoft.ML.OnnxRuntime) raises it to its own version. 1.24 is the last
          DirectML release, so the floor stays there while DirectML is supported. -->
     <OnnxRuntimeManagedVersion>1.24.4</OnnxRuntimeManagedVersion>
     <!-- The CPU build of ONNX Runtime that the tests and benchmarks run on where there is no GPU. -->
     <OnnxRuntimeTestVersion>1.31.1</OnnxRuntimeTestVersion>
-    <!-- Until PdfPecker.Ocr 0.1.0 is on nuget.org, the projects build against a checkout of it next to this repository
+    <!-- Until PdfPecker.Ocr 1.24.0 is on nuget.org, the projects build against a checkout of it next to this repository
          (../PdfPecker.Ocr), as CI does. Set PdfPeckerOcrProject to another path, or to an empty file name to force the
          package. -->
     <PdfPeckerOcrProject Condition="'$(PdfPeckerOcrProject)' == ''">$(MSBuildThisFileDirectory)../PdfPecker.Ocr/src/PdfPecker.Ocr/PdfPecker.Ocr.csproj</PdfPeckerOcrProject>
