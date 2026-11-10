@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/PdfPecker.Ocr.Gpu/PdfPecker.Ocr.Gpu.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/PdfPecker.Ocr.Gpu.Tests/PdfPecker.Ocr.Gpu.Tests.csproj" />
+  </Folder>
+  <Folder Name="/bench/">
+    <Project Path="bench/PdfPecker.Ocr.Gpu.Benchmarks/PdfPecker.Ocr.Gpu.Benchmarks.csproj" />
+  </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/ModelPacker/ModelPacker.csproj" />
+  </Folder>
+</Solution>

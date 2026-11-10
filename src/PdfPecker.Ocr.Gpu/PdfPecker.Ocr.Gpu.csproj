@@ -1,0 +1,60 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>PdfPecker.Ocr.Gpu</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IsTrimmable>true</IsTrimmable>
+    <PackageId>PdfPecker.Ocr.Gpu</PackageId>
+    <Authors>Moonwalker1307</Authors>
+    <Description>GPU support for PdfPecker.Ocr: runs its text detection, recognition and orientation networks on ONNX Runtime with CUDA or DirectML, on the CPU for any network you leave out, and falls back to PdfPecker.Ocr's own runtime when there is no GPU.</Description>
+    <Copyright>Copyright (c) 2026 Moonwalker1307</Copyright>
+    <RepositoryUrl>https://github.com/Moonwalker1307/PdfPecker.Ocr.Gpu</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>ocr;gpu;cuda;directml;onnxruntime;text-recognition;pdf;searchable-pdf;paddleocr;dotnet;pdfpecker</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>https://github.com/Moonwalker1307/PdfPecker.Ocr.Gpu</PackageProjectUrl>
+    <!-- The code is MIT and the embedded ONNX models are Apache-2.0; THIRD-PARTY-NOTICES.md carries their attribution. -->
+    <PackageLicenseExpression>MIT AND Apache-2.0</PackageLicenseExpression>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
+    <None Include="../../THIRD-PARTY-NOTICES.md" Pack="true" PackagePath="/" />
+    <None Include="../../LICENSE" Pack="true" PackagePath="/" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Only the managed half of ONNX Runtime: the application picks the native build for its hardware. -->
+    <PackageReference Include="Microsoft.ML.OnnxRuntime.Managed" Version="$(OnnxRuntimeManagedVersion)" />
+    <InternalsVisibleTo Include="PdfPecker.Ocr.Gpu.Tests" />
+  </ItemGroup>
+
+  <ItemGroup Condition="Exists('$(PdfPeckerOcrProject)')">
+    <ProjectReference Include="$(PdfPeckerOcrProject)" />
+  </ItemGroup>
+  <ItemGroup Condition="!Exists('$(PdfPeckerOcrProject)')">
+    <PackageReference Include="PdfPecker.Ocr" Version="$(PdfPeckerOcrVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The ONNX models, written by tools/ModelPacker; never edit them by hand. WithCulture="false" as in PdfPecker.Ocr. -->
+    <EmbeddedResource Include="Models\det.onnx.deflate" LogicalName="PdfPecker.Ocr.Gpu.Models.det.onnx.deflate" WithCulture="false" />
+    <EmbeddedResource Include="Models\rec.onnx.deflate" LogicalName="PdfPecker.Ocr.Gpu.Models.rec.onnx.deflate" WithCulture="false" />
+    <EmbeddedResource Include="Models\cls.onnx.deflate" LogicalName="PdfPecker.Ocr.Gpu.Models.cls.onnx.deflate" WithCulture="false" />
+  </ItemGroup>
+
+  <Target Name="CheckModelResources" BeforeTargets="CoreCompile">
+    <Error Condition="'%(EmbeddedResource.Extension)' == '.deflate' And !Exists('%(EmbeddedResource.FullPath)')"
+           Text="The model file %(EmbeddedResource.Identity) is missing; it is written by tools/ModelPacker." />
+  </Target>
+
+</Project>
