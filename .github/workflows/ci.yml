@@ -16,9 +16,8 @@ concurrency:
 env:
   DOTNET_NOLOGO: true
   DOTNET_CLI_TELEMETRY_OPTOUT: true
-  # The PdfPecker.Ocr the projects build against until a release with OcrAccelerator is on nuget.org: the branch of
-  # Moonwalker1307/PdfPecker.Ocr#8 while it is open, main once it is merged.
-  PDFPECKER_OCR_REF: claude/pluggable-network-backend
+  # The PdfPecker.Ocr the projects build against until a release with OcrAccelerator is on nuget.org.
+  PDFPECKER_OCR_REF: main
 
 jobs:
   build:
